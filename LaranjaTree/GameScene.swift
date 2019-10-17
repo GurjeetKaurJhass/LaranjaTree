@@ -53,7 +53,31 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             
         }
     
+     // global variables to keep track fo where the mouse starts
+       var mouseStartingPositionX:CGFloat = 0
+       var mouseStartingPositionY:CGFloat = 0
     
+       override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            let mouseTouch = touches.first
+           if (mouseTouch == nil) {
+                return
+           }
+            let location = mouseTouch!.location(in: self)
+          let mouseXPosition = location.x
+           let mouseYPosition = location.y
+    
+            print("Mouse ending position: \(mouseXPosition), \(mouseYPosition)");
+    
+    
+           let xDistance = mouseXPosition - mouseStartingPositionX
+           let yDistance = mouseYPosition - mouseStartingPositionY
+    
+           spawnOrange(x: mouseStartingPositionX,
+                    y: mouseStartingPositionY,
+                    throwXDistance: xDistance,
+                       throwYDistance: yDistance)
+    
+       }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
              print("Touched the screen")
@@ -72,12 +96,15 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                 let nodeTouched = atPoint(location).name
                  if (nodeTouched == "tree") {
 
-                  spawnOrange(x:mouseXPosition, y:  mouseYPosition)
+                  //spawnOrange(x:mouseXPosition, y:  mouseYPosition)
+                    
+                     mouseStartingPositionX = mouseXPosition
+                               mouseStartingPositionY = mouseYPosition
                 }
        
             }
     
-   func spawnOrange(x: CGFloat, y: CGFloat)
+   func spawnOrange(x:CGFloat, y:CGFloat, throwXDistance:CGFloat, throwYDistance:CGFloat)
    {
        // 1. make an orange
          let orange = SKSpriteNode(imageNamed: "Orange")
@@ -102,11 +129,10 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
            orange.physicsBody?.contactTestBitMask = 0
        //spawnOrange(x: mouseXPosition, y: mouseYPosition)
     let throwOrangeAction = SKAction.applyImpulse(
-                CGVector(dx: 100, dy: 100),
+                CGVector(dx:  throwXDistance, dy:  throwYDistance),
                duration: 0.5)
             orange.run(throwOrangeAction)
-    
-    
+
     
    }
   
