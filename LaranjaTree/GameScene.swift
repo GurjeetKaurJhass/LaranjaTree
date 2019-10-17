@@ -65,6 +65,13 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
            orange.position.y = mouseYPosition
             // 3. show the orange on screen
            addChild(orange)
+        
+        // ADD PHYSICS TO THE ORANGE
+               // ---------------------------
+              // 1. Give the orange a physics body
+                 orange.physicsBody = SKPhysicsBody(circleOfRadius: orange.size.width / 2)
+               // 2. Set gravity / dynamic for the orange
+                orange.physicsBody?.affectedByGravity = false
          }
     
    
