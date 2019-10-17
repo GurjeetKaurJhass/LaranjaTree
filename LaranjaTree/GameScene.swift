@@ -101,6 +101,12 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             orange.physicsBody?.categoryBitMask = 1
            orange.physicsBody?.contactTestBitMask = 0
        //spawnOrange(x: mouseXPosition, y: mouseYPosition)
+    let throwOrangeAction = SKAction.applyImpulse(
+                CGVector(dx: 100, dy: 100),
+               duration: 0.5)
+            orange.run(throwOrangeAction)
+    
+    
     
    }
   
