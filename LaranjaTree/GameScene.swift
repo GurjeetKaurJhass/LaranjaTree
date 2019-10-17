@@ -22,8 +22,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                self.ground.physicsBody?.categoryBitMask = 32
                self.ground.physicsBody?.collisionBitMask = 0
                self.ground.physicsBody?.contactTestBitMask = 0
-        
-        
+    
         
         }
     override func update(_ currentTime: TimeInterval) {
@@ -36,7 +35,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             
             let nodeA = contact.bodyA.node
             let nodeB = contact.bodyB.node
-            
             if (nodeA == nil || nodeB == nil) {
                 return
             }
@@ -67,34 +65,43 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                  return
              }
              let location = mouseTouch!.location(in: self)
-            let mouseXPosition = location.x
-            let mouseYPosition = location.y
+             let mouseXPosition = location.x
+             let mouseYPosition = location.y
              
-           // 1. make an orange
-           let orange = SKSpriteNode(imageNamed: "Orange")
-           // 2. Position the orange on the scren
-           orange.position.x = mouseXPosition
-           orange.position.y = mouseYPosition
-            // 3. show the orange on screen
-           addChild(orange)
-           orange.zPosition = 999
-        
-        // ADD PHYSICS TO THE ORANGE
-               // ---------------------------
-              // 1. Give the orange a physics body
-                 orange.physicsBody = SKPhysicsBody(circleOfRadius: orange.size.width / 2)
-               // 2. Set gravity / dynamic for the orange
-                orange.physicsBody?.affectedByGravity = false
-         // 2. Give orange gravity. By default, orange is affected by gravity.
-                // orange.physicsBody?.affectedByGravity = true
-               // 3. Set category, collision, and contact bit masks
-               //  - By default, collison = everything, contact = 0
-                orange.physicsBody?.categoryBitMask = 1
-               orange.physicsBody?.contactTestBitMask = 0
-        
-        
-         }
+              // detect what sprite was touched
+                let nodeTouched = atPoint(location).name
+                 if (nodeTouched == "tree") {
+
+                  spawnOrange(x:mouseXPosition, y:  mouseYPosition)
+                }
+       
+            }
     
-   
+   func spawnOrange(x: CGFloat, y: CGFloat)
+   {
+       // 1. make an orange
+         let orange = SKSpriteNode(imageNamed: "Orange")
+         //2. Position the orange on the scren
+        orange.position.x = x
+        orange.position.y = y
+        // 3. show the orange on screen
+         addChild(orange)
+         orange.zPosition = 999
+
+          // ADD PHYSICS TO THE ORANGE
+          // ---------------------------
+          // 1. Give the orange a physics body
+             orange.physicsBody = SKPhysicsBody(circleOfRadius: orange.size.width / 2)
+           // 2. Set gravity / dynamic for the orange
+            orange.physicsBody?.affectedByGravity = false
+           // 2. Give orange gravity. By default, orange is affected by gravity.
+            // orange.physicsBody?.affectedByGravity = true
+           // 3. Set category, collision, and contact bit masks
+           //  - By default, collison = everything, contact = 0
+            orange.physicsBody?.categoryBitMask = 1
+           orange.physicsBody?.contactTestBitMask = 0
+       //spawnOrange(x: mouseXPosition, y: mouseYPosition)
+    
+   }
   
 }
